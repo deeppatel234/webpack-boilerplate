@@ -1,39 +1,33 @@
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
-const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const common = require('./webpack.common.js');
 const PATHS = require('./paths');
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
   output: {
     path: PATHS.BUILD_DIR,
     filename: 'static/js/[name].[chunkhash].js',
     publicPath: '/',
+    clean: true,
   },
   optimization: {
     minimizer: [
       new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
         terserOptions: {
-          output: {
+          format: {
             comments: false,
           },
           compress: {
-            warnings: false,
             drop_console: true,
           },
         },
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new CssMinimizerPlugin({}),
     ],
     splitChunks: {
       cacheGroups: {
@@ -54,15 +48,6 @@ module.exports = merge(common, {
         collapseWhitespace: true,
         minifyJS: true,
       },
-    }),
-    new CompressionPlugin({
-      filename: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.js$|\.css$/,
-    }),
-    new WorkboxPlugin.GenerateSW({
-      swDest: 'serviceWorker.js',
-      skipWaiting: true,
     }),
   ],
 });

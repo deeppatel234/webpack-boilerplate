@@ -1,4 +1,5 @@
-const merge = require('webpack-merge');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const detect = require('detect-port');
 
@@ -13,22 +14,29 @@ module.exports = async () => {
 
   return merge(common, {
     mode: 'development',
-    devtool: 'cheap-module-source-map',
     output: {
       path: PATHS.DIST_DIR,
-      filename: 'static/js/[name].[hash].js',
+      filename: 'static/js/[name].[chunkhash].js',
       publicPath: '/',
+      clean: true,
     },
     devServer: {
       port: port,
       host: HOST,
-      contentBase: './',
+      client: {
+        overlay: {
+          errors: true,
+          warnings: true,
+        },
+        progress: true,
+      },
+      compress: true,
       historyApiFallback: true,
       hot: true,
       open: true,
-      compress: true,
     },
     plugins: [
+      new webpack.SourceMapDevToolPlugin({}),
       new HtmlWebpackPlugin({
         filename: `${PATHS.DIST_DIR}/index.html`,
         template: `${PATHS.PUBLIC_DIR}/index.html`,

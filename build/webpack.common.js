@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const PATHS = require('./paths');
@@ -9,6 +8,7 @@ const PATHS = require('./paths');
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
+  devtool: false,
   entry: {
     app: `${PATHS.SRC_DIR}/index.js`,
   },
@@ -73,10 +73,11 @@ module.exports = {
     },
   },
   plugins: [
-    new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([{ from: PATHS.PUBLIC_DIR, to: PATHS.DIST_DIR }]),
+    // new CopyWebpackPlugin({
+    //   patterns: [{ from: PATHS.PUBLIC_DIR, to: PATHS.DIST_DIR }],
+    // }),
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name].[hash].css',
+      filename: 'static/css/[name].[chunkhash].css',
       ignoreOrder: true,
     }),
     new webpack.DefinePlugin({
