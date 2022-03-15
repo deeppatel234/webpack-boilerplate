@@ -128,7 +128,6 @@ module.exports = {
       },
       {
         test: /\.(css)$/,
-        use: [],
         use: getStyleLoaders({
           importLoaders: 1,
           sourceMap: isEnvDevelopment,
