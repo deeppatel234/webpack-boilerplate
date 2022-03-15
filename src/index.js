@@ -1,13 +1,12 @@
-/* global NODE_ENV */
-import React from 'react';
-import ReactDom from 'react-dom';
+import React from "react";
+import ReactDom from "react-dom";
 
-import './index.scss';
+import Test from "src/Test";
 
-const App = () => {
-  return <div>Hello World</div>;
-};
+import "./index.scss";
 
-const root = document.getElementById('root');
+const App = () => <Test />;
+
+const root = document.getElementById("root");
 
 ReactDom.render(<App />, root);
