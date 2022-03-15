@@ -1,5 +1,5 @@
 const { merge } = require('webpack-merge');
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -9,21 +9,31 @@ const PATHS = require('./paths');
 
 module.exports = merge(common, {
   mode: 'production',
+  bail: true,
   output: {
-    path: PATHS.BUILD_DIR,
-    filename: 'static/js/[name].[chunkhash].js',
-    publicPath: '/',
-    clean: true,
+    filename: 'static/js/[name].[contenthash:8].js',
+    chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
   },
   optimization: {
     minimizer: [
       new TerserPlugin({
         terserOptions: {
-          format: {
-            comments: false,
-          },
+          // parse: {
+          //   ecma: 8,
+          // },
           compress: {
+            // ecma: 5,
+            warnings: false,
             drop_console: true,
+          },
+          mangle: {
+            safari10: true,
+          },
+          output: {
+            // ecma: 5,
+            comments: false,
+            // Emoji and regex is not minified properly using default
+            ascii_only: true,
           },
         },
       }),
@@ -46,8 +56,20 @@ module.exports = merge(common, {
       minify: {
         removeComments: true,
         collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
         minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
       },
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'static/css/[name].[contenthash:8].css',
+      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+      ignoreOrder: true,
     }),
   ],
 });
