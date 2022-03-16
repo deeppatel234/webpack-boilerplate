@@ -9,7 +9,7 @@ module.exports = {
     node: true,
   },
   extends: ["airbnb", "prettier", "plugin:jsx-a11y/recommended"],
-  plugins: ["react", "prettier", "jsx-a11y"],
+  plugins: ["react", "react-hooks", "prettier", "jsx-a11y"],
   parser: "@babel/eslint-parser",
   parserOptions: {
     requireConfigFile: false,
@@ -46,5 +46,7 @@ module.exports = {
     ],
     "react/function-component-definition": [2, { namedComponents: "arrow-function" }],
     "import/no-extraneous-dependencies": ["error", { devDependencies: ["**/build/*"] }],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
   },
 };
