@@ -63,7 +63,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 module.exports = {
   devtool: false,
   entry: {
-    app: `${PATHS.SRC_DIR}/index.js`,
+    app: `${PATHS.SRC_DIR}/index.tsx`,
   },
   output: {
     path: PATHS.BUILD_DIR,
@@ -82,7 +82,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx)$/,
         include: PATHS.SRC_DIR,
         exclude: /node_modules/,
         loader: "babel-loader",
@@ -154,7 +154,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".ts", ".tsx"],
     alias: {
       src: PATHS.SRC_DIR,
     },
@@ -181,7 +181,7 @@ module.exports = {
       NODE_ENV: JSON.stringify(NODE_ENV),
     }),
     new ESLintPlugin({
-      extensions: ["js", "jsx"],
+      extensions: ["js", "ts", "tsx"],
     }),
   ],
 };

@@ -21,7 +21,7 @@ module.exports = async () => {
       chunkFilename: "static/js/[name].chunk.js",
     },
     devServer: {
-      port: port,
+      port,
       host: HOST,
       client: {
         overlay: {

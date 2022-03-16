@@ -20,6 +20,7 @@ module.exports = ({ isEnvDevelopment } = {}) => {
         },
       ],
       "@babel/preset-react",
+      "@babel/preset-typescript",
     ],
   };
 };

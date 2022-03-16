@@ -8,9 +8,22 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: ["airbnb", "prettier", "plugin:jsx-a11y/recommended"],
-  plugins: ["react", "prettier", "jsx-a11y"],
-  parser: "@babel/eslint-parser",
+  extends: [
+    "airbnb-typescript",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/recommended",
+    "prettier",
+  ],
+  plugins: [
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "import",
+    "@typescript-eslint",
+    "prettier",
+  ],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     requireConfigFile: false,
     ecmaVersion: "latest",
@@ -18,6 +31,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
+    project: './tsconfig.json',
     babelOptions: {
       ...babelConfig(),
     },
@@ -41,10 +55,12 @@ module.exports = {
     "react/jsx-filename-extension": [
       1,
       {
-        extensions: [".js", ".jsx"],
+        extensions: [".ts", ".tsx"],
       },
     ],
     "react/function-component-definition": [2, { namedComponents: "arrow-function" }],
     "import/no-extraneous-dependencies": ["error", { devDependencies: ["**/build/*"] }],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
   },
 };
